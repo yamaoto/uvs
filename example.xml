@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uvs xmlns:xsi="http://sekai7.org/uvs"
+	   xsi:noNamespaceSchemaLocation='uvs.xsd'>
+<word>
+<prefix value="" />
+<root value ="" />
+<suffix value="" />
+<postfix value="" />
+</word>
+<prefix>
+<root value="" />
+<left value="false" />
+<right value="false" />
+<tag value=""/>
+</prefix>
+<suffix>
+<root value="" />
+<left value="false" />
+<right value="false" />
+<tag value=""/>
+</suffix>
+<postfix>
+<root value="" />
+<left value="false" />
+<right value="false" />
+<tag value=""/>
+</postfix>
+</uvs>
