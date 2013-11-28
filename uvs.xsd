@@ -1,177 +1,210 @@
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://sekai7.org/uvs">
+
+  
   <xs:element name="uvs">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="word">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="prefix">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="root">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="suffix">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="postfix">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
+              <xs:element name="prefixId" type="xs:ID" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="rootId" type="xs:ID" minOccurs="1" maxOccurs="unbounded" />
+              <xs:element name="suffixId" type="xs:ID" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="postfixId" type="xs:ID" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="content" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+              <xs:choice minOccurs="1" maxOccurs="1">
+                <xs:element name="PronounOptions">
+                  <xs:complexType>
+                    <xs:attribute name="many" type="xs:boolean" default="0" />
+                    <xs:attribute name="person" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="1"/>
+                          <xs:maxInclusive value="3"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="NumeralOptions">
+                  <xs:complexType>
+                    <xs:attribute name="type">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="quantitative"/>
+                          <xs:enumeration value="ordinal"/>
+                          <xs:enumeration value="collective"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="NounOptions">
+                  <xs:complexType>
+                    <xs:attribute name="type">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="common noun"/>
+                          <xs:enumeration value="proper"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute type="xs:boolean" name="animations" default="0" use="optional" />
+                    <xs:attribute name="discharge" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="concrete"/>
+                          <xs:enumeration value="real"/>
+                          <xs:enumeration value="abstract"/>
+                          <xs:enumeration value="collective"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="declination" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="1"/>
+                          <xs:maxInclusive value="3"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="genus" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="man"/>
+                          <xs:enumeration value="woman"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="many" type="xs:boolean" default="0" use="optional"/>
+                    <xs:attribute name="case" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="1"/>
+                          <xs:maxInclusive value="7"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="AdverbOptions">
+                  <xs:complexType>
+                      
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="AdjectiveOptions">
+                  <xs:complexType>
+                    <xs:attribute name="genus" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="man"/>
+                          <xs:enumeration value="woman"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="many" type="xs:boolean" default="0" use="optional"/>
+                    <xs:attribute name="case" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="1"/>
+                          <xs:maxInclusive value="7"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="VerbOptions">
+                  <xs:complexType>
+                    <xs:attribute type="xs:boolean" name="infinitive" default="1" use="optional"/>
+                    <xs:attribute type="xs:boolean" name="perfect" default="1" use="optional"/>
+                    <xs:attribute name="conjugation" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="1"/>
+                          <xs:maxInclusive value="2"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="inclination" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="indicative"/>
+                          <xs:enumeration value="conditional"/>
+                          <xs:enumeration value="indicative"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="time" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="currently"/>
+                          <xs:enumeration value="past"/>
+                          <xs:enumeration value="future"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="person" use="required">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="1"/>
+                          <xs:maxInclusive value="3"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="many" default="0" type="xs:boolean" use="optional" />
+                    <xs:attribute name="bail" type="xs:string" fixed="unsupported" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
             </xs:sequence>
+            <xs:attribute name="language" type="xs:language" default="ru"/>
+            <xs:attribute name ="id" type="xs:ID" use="required" />
+            <xs:attribute name="type" use="required" >
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Pronoun"/>
+                  <xs:enumeration value="Numeral"/>
+                  <xs:enumeration value="Noun"/>
+                  <xs:enumeration value="Adverb"/>
+                  <xs:enumeration value="Adjective"/>
+                  <xs:enumeration value="Verb"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
           </xs:complexType>
         </xs:element>
-        <xs:element name="prefix">
+        <xs:element name="suffix" >
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="root">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="left">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="right">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="tag">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
+              <xs:element name="root" minOccurs="1" maxOccurs="1" type="xs:string" />
+              <xs:element name="content" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="suffix">
+            <xs:attribute type="xs:ID" name="id" use="required"/>
+            <xs:attribute name="type" use="required" >
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="preffix"/>
+                  <xs:enumeration value="suffix"/>
+                  <xs:enumeration value="postffix"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute type="xs:boolean" name="left" default="1" use="optional" />
+            <xs:attribute type="xs:boolean" name="right" default="1" use="optional" />
+            <xs:attribute name="language" type="xs:language" default="ru"/>
+          </xs:complexType>          
+        </xs:element>        
+        <xs:element name="root">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="root">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="left">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="right">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="tag">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
+              <xs:element name="root" type="xs:string"  minOccurs="1" maxOccurs="1"/>              
+              <xs:element name="content" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="postfix">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="root">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="left">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="right">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="tag">
-                <xs:complexType>
-                  <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                      <xs:attribute type="xs:string" name="value"/>
-                    </xs:extension>
-                  </xs:simpleContent>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
+            <xs:attribute type="xs:ID" name="id"/>
+            <xs:attribute name="language" type="xs:language" default="ru"/>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
-      <xs:attribute ref="uvs:noNamespaceSchemaLocation" xmlns:uvs="http://sekai7.org/uvs"/>
     </xs:complexType>
   </xs:element>
 </xs:schema>
